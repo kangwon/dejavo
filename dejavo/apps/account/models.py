@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone, six
 from django.template import RequestContext, TemplateDoesNotExist
 from django.template.loader import render_to_string
+from PIL import Image
 
 from dejavo.apps.zabo.models import Article
 
@@ -148,6 +149,33 @@ class ZaboProfile(models.Model):
         self.point = point
         self.point_updated_time = timezone.now()
         return changed
+
+    def save(self, *args, **kwargs):
+        super(ZaboProfile, self).save(*args, **kwargs)
+
+        if self.profile_image:
+            pw = self.profile_image.width
+            ph = self.profile_image.height
+            mw = 320
+            mh = 320
+
+            if (pw > mw) or (ph > mh):
+                # we require a resize
+                # load the image
+                imageObj = Image.open(self.profile_image.path)
+                ratio = 1
+
+                if (pw > mw):
+                    ratio = mw / float(pw)
+                    pw = mw
+                    ph = int(float(ph) * ratio)
+
+                if (ph > mh):
+                    ratio = ratio * (mh / float(ph))
+                    ph = mh
+                    pw = int(float(ph) * ratio)
+                imageObj = imageObj.resize((pw, ph), Image.ANTIALIAS)
+                imageObj.save(self.profile_image.path)
 
 ZaboUser.profile = property(lambda u: ZaboProfile.objects.get(user = u))
 
