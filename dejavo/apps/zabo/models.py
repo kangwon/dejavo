@@ -1,4 +1,4 @@
-# -*- coding: utf-8
+# -*- coding: utf-8 -*- #
 
 from django.db import models
 from django.conf import settings
@@ -39,7 +39,7 @@ class Article(models.Model):
     is_published = models.BooleanField(default = False)
     # Article creation timestamp
     created_date = models.DateTimeField(auto_now_add = True)
-    updated_date = models.DateTimeField(auto_now = True, auto_now_add = True)
+    updated_date = models.DateTimeField(auto_now = True)
 
     def set_fields(self, fields, posts, files):
         for field_name in fields:

@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.core.urlresolvers import reverse
@@ -17,83 +17,76 @@ from jwt_auth.token import generate_jwt, refresh_jwt
 from social.apps.django_app.utils import psa
 from social.exceptions import NotAllowedToDisconnect
 
-from dejavo.apps.account.models import Participation, RegistrationProfile
+from dejavo.apps.account.models import Participation, RegistrationProfile, ZaboUser
+from dejavo.apps.account.auth_backend import PasswordlessModelBackend
+from dejavo.apps.account.sparcssso import Client
 from dejavo.apps.zabo.models import Article
 
+import random
 import json
+
+# for TESTING #
+sso_client = Client(is_test=True)
 
 @require_accept_formats(['text/html', 'application/json'])
 @require_http_methods(['POST', 'GET'])
 def login_view(request):
-
     if request.user.is_authenticated():
         if request.ACCEPT_FORMAT == 'html':
             next_link = request.GET.get('next', '/')
             return HttpResponseRedirect(next_link)
 
-        elif request.ACCEPT_FORMAT == 'json':
-            return JsonResponse(
-                    status = 400,
-                    data = {'error' : 'Already logged in'}
-                    )
+    request.session['next'] = request.GET.get('next', '/')
 
-    if request.method == 'GET':
-        return render(request, "account/login.html")
+    callback_url = request.build_absolute_uri('/login/callback/')
+    login_url = sso_client.get_login_url(callback_url)
+    return HttpResponseRedirect(login_url)
 
-    email = request.POST.get('email', None)
-    password = request.POST.get('password', None)
-    
-    if not email or not password:
-        # invalid format
-        if request.ACCEPT_FORMAT == 'html':
-            return render(request, "account/login.html", {
-                'error_msg' : 'Fail to login'
-                })
 
-        elif request.ACCEPT_FORMAT == 'json':
-            return JsonResponse(status = 400,
-                    data = {'error' : 'Invalid format'}
-                    )
+def login_callback(request):
+    if request.method == "GET":
+        next = request.session.pop('next', '/')
+        tokenid = request.GET.get('tokenid', '')
 
-    user = authenticate(username = email, password = password)
+        sso_profile = sso_client.get_user_info(tokenid)
+        service_id = sso_profile['sid']
 
-    if user is None:
-        # login fail page. wrong password, email 
-        if request.ACCEPT_FORMAT == 'html':
-            return render(request, "account/login.html", {
-                'error_msg' : 'Fail to login'
-                })
+        user_list = ZaboUser.objects.filter(sid=service_id)
+        try:
+            kaist_info = json.loads(sso_profile['kaist_info'])
+            student_id = kaist_info.get('ku_std_no')
+        except:
+            student_id = ''
 
-        elif request.ACCEPT_FORMAT == 'json':
-            return JsonResponse(
-                    status = 400,
-                    data = {'error' : 'Failed to login'}
-                    )
+        if len(user_list) == 0:
+            user = ZaboUser.objects.create_user(sid=service_id,
+                            email=sso_profile['email'],
+                            password=str(random.getrandbits(32)),
+                            first_name=sso_profile['first_name'],
+                            last_name=sso_profile['last_name'])
 
-    if not user.is_active:
-        # user inactive
-        if request.ACCEPT_FORMAT == 'html':
-            # XXX user blocked page??
-            return HttpResponse(
-                    status = 403,
-                    content = 'User is blocked'
-                    )
-        elif request.ACCEPT_FORMAT == 'json':
-            return JsonResponse(
-                    status = 403,
-                    data = {'error' : 'User is blocked'}
-                    )
-    else:
-        login(request, user)
-        # login success
-        if request.ACCEPT_FORMAT == 'html':
-            return HttpResponseRedirect(request.GET.get(REDIRECT_FIELD_NAME, '/')
-                    )
-        elif request.ACCEPT_FORMAT == 'json':
-            return JsonResponse(
-                    status = 200,
-                    data = user.as_json()
-                    )
+            user_profile = user.profile
+            user_profile.sid = sso_profile['sid']
+            user_profile.phone = request.POST.get('phone', '')
+            user_profile.bio = request.POST.get('bio', '')
+
+            user_profile.save()
+            user.save()
+
+            user = authenticate(username=service_id)
+            login(request, user)
+            return redirect(next)
+        else:
+            user = authenticate(username=user_list[0].sid)
+            user.first_name = sso_profile['first_name']
+            user.last_name = sso_profile['last_name']
+            user.save()
+            user_profile = user.profile
+            user_profile.student_id = student_id
+            user_profile.save()
+            login(request, user)
+            return redirect(next)
+    return render('/account/login.html', {'error_msg': "Invalid login"})
 
 @require_accept_formats(['text/html', 'application/json'])
 @require_http_methods(['GET'])

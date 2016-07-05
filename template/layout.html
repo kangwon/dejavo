@@ -48,7 +48,7 @@
 					<div class="menu menu_right" id="profile_container">
 						<div class="profile">
 							{% if not user.is_authenticated %}
-							<a id="login_button" href="#">
+							<a id="login_button" href="/login/">
 								<span>로그인</span>
 							</a>
 							{% else %}
@@ -85,12 +85,12 @@
 		<script src="{{ STATIC_URL }}js/layout.js"></script>
 		{% if not user.is_authenticated %}
 		<script>
-		$(document).ready(function(){
-		    $("a#login_button").click(function(e){
-				e.preventDefault();
-				ZB.login();
-				});
-			});
+		// $(document).ready(function(){
+		//     $("a#login_button").click(function(e){
+		// 		e.preventDefault();
+		// 		ZB.login();
+		// 		});
+		// 	});
 		</script>
 		{% endif %}
 		{% block aftercontent %}

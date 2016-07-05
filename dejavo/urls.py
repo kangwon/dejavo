@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^login/$', 'dejavo.apps.account.views.login_view'),
+    url(r'^login/callback/$', 'dejavo.apps.account.views.login_callback'),
     url(r'^logout/$', 'dejavo.apps.account.views.logout_view'),
 
     url(r'^jwt/login/$', 'dejavo.apps.account.views.jwt_login'),

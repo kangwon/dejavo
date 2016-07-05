@@ -20,10 +20,13 @@ SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 class ZaboUserManager(BaseUserManager):
 
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, sid, email, password, first_name, last_name, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         # TODO email validate
-        user =  self.model(email = email,
+        user =  self.model(sid = sid,
+                email = email,
+                first_name = first_name, 
+                last_name = last_name,
                 is_staff = is_staff,
                 is_superuser = is_superuser,
                 date_joined = now, **extra_fields)
@@ -36,8 +39,8 @@ class ZaboUserManager(BaseUserManager):
 
         return user
 
-    def create_user(self, email, password=None):
-        return self._create_user(email, password, False, False, is_active=False)
+    def create_user(self, sid, email, first_name, last_name, password=None):
+        return self._create_user(sid, email, password, first_name, last_name, False, False, is_active=True)
 
     def create_superuser(self, email, password):
         return self._create_user(email, password, True, True, is_active=True)
@@ -45,32 +48,35 @@ class ZaboUserManager(BaseUserManager):
 
 class ZaboUser(AbstractBaseUser):
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'sid'
     REQUIRED_FIELDS = []
     objects = ZaboUserManager()
 
+    student_id = models.CharField(max_length=10)
+    sid = models.CharField(max_length=30, unique=True) 
+    # service id - unique, changed when the user re-register
+    
     email = models.EmailField(_('email address'), blank=True, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
-    is_active = models.BooleanField(_('active'), default=False)
+    is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
     is_superuser = models.BooleanField(_('superuser'), default=False)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     @property
     def username(self):
-        return self.email
+        return self.sid
 
     def get_full_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.first_name+self.last_name
 
     def get_short_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.last_name
 
     def __unicode__(self):
-        return self.email
+        # The user is identified by their sid(service id)
+        return self.sid
 
     def has_perm(self, perm, obj=None):
         """
@@ -115,6 +121,33 @@ class ZaboProfile(models.Model):
     profile_image = models.ImageField(upload_to = 'profile', default='default/default_profile.png')
     phone = models.CharField(max_length = 50, blank = True)
     bio = models.TextField(blank = True)
+
+    sid = models.CharField(max_length=30, db_index = True)
+    # service id - unique, changed when the user re-register
+    language = models.CharField(max_length=15)
+    point = 0
+    point_updated_time = None
+
+    def get_point(self, update=False):
+        if not self.point_updated_time or update:
+            self.sync_point()
+        return self.point, self.point_updated_time
+
+    def sync_point(self):
+        if sso_client.is_test:
+            self.point = 0
+        else:
+            self.point = sso_client.get_point(self.sid)
+        self.point_updated_time = timezone.now()
+
+    def add_point(self, delta, action):
+        if sso_client.is_test or delta <= 0:
+            return False
+
+        changed, point = sso_client.modify_point(self.sid, delta, action)
+        self.point = point
+        self.point_updated_time = timezone.now()
+        return changed
 
 ZaboUser.profile = property(lambda u: ZaboProfile.objects.get(user = u))
 
