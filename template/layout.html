@@ -35,11 +35,6 @@
 							<span>게시판 둘러보기</span>
 						</a>
 					</div>
-					<!--div class="menu menu_left">
-						<a href="#">
-							<span>과거의 흔적</span>
-						</a>
-					</div-->
 					<div class="menu menu_left">
 						<a id="create_article" href="#">
 							<span>자보 붙이기</span>
@@ -83,16 +78,6 @@
 		<script src="{{ STATIC_URL }}js/jquery.simplemodal.js"></script>
 		<script src="{{ STATIC_URL }}js/jquery.vhmiddle.js"></script>
 		<script src="{{ STATIC_URL }}js/layout.js"></script>
-		{% if not user.is_authenticated %}
-		<script>
-		// $(document).ready(function(){
-		//     $("a#login_button").click(function(e){
-		// 		e.preventDefault();
-		// 		ZB.login();
-		// 		});
-		// 	});
-		</script>
-		{% endif %}
 		{% block aftercontent %}
 		{% endblock %}
         <!-- Include all compiled plugins (below), or include individual files as needed -->

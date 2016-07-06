@@ -26,14 +26,6 @@ $(document).ready(function(){
 				var $poster_div = $("<div class='poster'></div>").addClass('vhmiddle').addClass('vhmiddle-portrait');
 				var $anchor = $("<a/>").attr({'href':"/article/"+article.id});
 				var $img = $("<img/>").attr({'src':article.poster.category_thumb, 'alt':article.title});
-<<<<<<< HEAD
-				console.log("===============");
-				console.log(article);
-				console.log(article.poster);
-				console.log(article.poster.category_thumb);
-				console.log("===============");
-=======
->>>>>>> tmp_develop
 				$anchor.append($img);
 				$poster_div.append($anchor);
 				$main_elem.append($poster_div);
@@ -54,8 +46,4 @@ $(document).ready(function(){
 		'error' : function() {
 		},
 	});
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> tmp_develop
