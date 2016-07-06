@@ -235,6 +235,7 @@ div#article_action_container
 
 .register_form
 {
+    font-family: 'Nanum Gothic';
     width: 240px;
     padding: 30px 30px 20px 30px;
     background-color: #f4e5e2;
@@ -243,7 +244,6 @@ div#article_action_container
 
 .register_form #register_head
 {
-    font-family: 'Nanum Gothic';
     font-size: 18px;
     font-weight: bold;
     color: #685854;
@@ -255,7 +255,6 @@ div#article_action_container
     width: 280px;
     height: 20px;
     font-size: 15px;
-    font-family: 'Nanum Gothic';
     font-weight: bold;
     color: #5c514e;
     border: 0px;
