@@ -354,8 +354,7 @@ div#article_action_container
     float: left;
 }
 
-#login_id_pw div#link_list span
-{
+#login_id_pw div#link_list span {
     cursor: pointer;
     position: relative;
     top: -2px;
@@ -365,39 +364,33 @@ div#article_action_container
     font-weight: bold;
 }
 
-#login_id_pw div#action_container
-{
+#login_id_pw div#action_container {
     height: 42px;
 }
 
-#login_id_pw div#login_button
-{
+#login_id_pw div#login_button {
     float: right;
 }
 
-#login_id_pw div#login_button button
-{
+#login_id_pw div#login_button button {
     height: 42px;
     font-size: 15.2px;
     font-weight: bold;
     cursor: pointer;
 }
 
-#login_sns #facebook_login
-{
+#login_sns #facebook_login {
     border-radius: 5px;
     background-color: #6184d4;
     height: 50px;
     cursor: pointer;
 }
 
-#simplemodal-container div::-webkit-scrollbar
-{
+#simplemodal-container div::-webkit-scrollbar {
     width: 0 !important;
 }
 
-#simplemodal-container div
-{
+#simplemodal-container div {
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
