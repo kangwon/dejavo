@@ -1,24 +1,20 @@
 @import url('nanumbarungothic.css');
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-body
-{
+body {
     margin: 0;
     background: #f6f0ee;
 }
 
-a
-{
+a {
     text-decoration: none;
 }
 
-a:hover
-{
+a:hover {
     text-decoration: none;
 }
 
-button
-{
+button {
     font-size: 13px;
     font-family: 'Nanum Gothic';
     font-weight: 500;
@@ -29,44 +25,37 @@ button
     border: 0px;
 }
 
-.button-large
-{
+.button-large {
     font-size: 27px;
     padding: 20px 30px 20px 30px;
     font-family: 'Nanum Barun Gothic';
 }
 
-.button-small
-{
+.button-small {
     padding: 7px 9px 7px 9px;
     font-family: 'Nanum Gothic';
 }
 
-.stress
-{
+.stress {
     transition: background .5s !important;
 }
 
-.stress:hover
-{
+.stress:hover {
     background-color: #f15050 !important;
 }
 
-#head_container
-{
+#head_container {
     background: #ffffff;
 }
 
-#head_bar
-{
+#head_bar {
     max-width: 1600px;
     margin: 0 auto;
     height: 80px;
     overflow-y: hidden;
 }
 
-#home
-{
+#home {
     margin-left: 20px;
     width: 305px;
     float: left;
@@ -75,8 +64,7 @@ button
     line-height: 80px;
 }
 
-.menu span
-{
+.menu span {
     font-family: 'Nanum Gothic';
     font-size: 19px;
     font-weight: 700;
@@ -84,38 +72,32 @@ button
     line-height: 80px;
 }
 
-.menu_left
-{
+.menu_left {
     float: left;
     margin-right: 70px;
 }
 
-.menu_right
-{
+.menu_right {
     float: right;
 }
 
-#profile_container
-{
+#profile_container {
     margin-right: 20px;
 }
 
-#profile_container .profile
-{
+#profile_container .profile {
     float: right;
     margin-left: 10px;
 }
 
-#profile_container .profile_img_container
-{
+#profile_container .profile_img_container {
     float: right;
     width: 40px;
     height: 80px;
     position: relative;
 }
 
-#profile_container .profile_img_container .profile_img
-{
+#profile_container .profile_img_container .profile_img {
     width: 40px;
     height: 40px;
     margin: auto;
@@ -126,8 +108,7 @@ button
     overflow: hidden;
 }
 
-#account_dialog 
-{
+#account_dialog {
     padding: 10px;
     background-color: #f4e5e2;
     border-radius: 10px;
@@ -135,18 +116,15 @@ button
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 10px 0px;
 }
 
-#account_dialog > div:first-child
-{
+#account_dialog > div:first-child {
     margin-top: 0px;
 }
 
-#account_dialog > div
-{
+#account_dialog > div {
     margin-top: 10px;
 }
 
-#account_dialog button
-{
+#account_dialog button {
     width: 120px;
     background-color: #ffffff;
     color: #706563;
@@ -156,8 +134,7 @@ button
     outline: none;
 }
 
-#account_dialog button:hover
-{
+#account_dialog button:hover {
     color: #f15050;
     border-color: #f15050;
 }
@@ -166,30 +143,26 @@ button
  * Login Form CSS
  */
 
-.login_form
-{
+.login_form {
     width: 320px;
     padding: 40px;
     background-color: #f4e5e2;
     border-radius: 10px;
 }
 
-.login_form#login_id_pw
-{
+.login_form#login_id_pw {
     padding-bottom: 25px;
     border-radius: 10px 10px 0px 0px;
     border-bottom: 2px solid #ecdede;
 }
 
-.login_form#login_sns
-{
+.login_form#login_sns {
     padding-top: 5px;
     padding-bottom: 25px;
     border-radius: 0px 0px 10px 10px;
 }
 
-.login_form input
-{
+.login_form input {
     width: 280px;
     height: 20px;
     font-size: 18px;
@@ -202,20 +175,17 @@ button
     border-radius: 5px;
 }
 
-.login_form input#login_password
-{
+.login_form input#login_password {
     margin-bottom: 5px;
 }
 
 div#login_error_container,
-div#facebook_error_container
-{
+div#facebook_error_container {
     height: 20px;
 }
 
 div#login_error_container span#login_error,
-div#facebook_error_container span#facebook_error
-{
+div#facebook_error_container span#facebook_error {
     float:right;
     font-weight : bold;
     color: #f0795b;
@@ -223,18 +193,15 @@ div#facebook_error_container span#facebook_error
     font-size: 13px;
 }
 
-div#article_draft_content
-{
+div#article_draft_content {
     width: 350px;
 }
 
-div#article_action_container
-{
+div#article_action_container {
     height: 35px;
 }
 
-.register_form
-{
+.register_form {
     font-family: 'Nanum Gothic';
     width: 240px;
     padding: 30px 30px 20px 30px;
@@ -242,16 +209,14 @@ div#article_action_container
     border-radius: 10px;
 }
 
-.register_form #register_head
-{
+.register_form #register_head {
     font-size: 18px;
     font-weight: bold;
     color: #685854;
     margin: 0px 0px 20px 3px;
 }
 
-.register_form input
-{
+.register_form input {
     width: 280px;
     height: 20px;
     font-size: 15px;
@@ -264,8 +229,7 @@ div#article_action_container
 }
 
 
-.register_form span#register_error
-{
+.register_form span#register_error {
     float:left;
     line-height: 35px;
     vertical-align: middle;
@@ -277,19 +241,16 @@ div#article_action_container
     font-weight: bold;
 }
 
-.register_form input#register_email
-{
+.register_form input#register_email {
     width: 200px;
 }
 
 .register_form input#register_password,
-.register_form input#register_password_check
-{
+.register_form input#register_password_check {
     width: 160px;
 }
 
-.register_form span#register_password_error
-{
+.register_form span#register_password_error {
     float: right;
     line-height: 30px;
     color: #f15050;
@@ -297,59 +258,54 @@ div#article_action_container
     font-size: 11px;
 }
 
-.register_form input#register_lastname
-{
+.register_form input#register_lastname {
     width: 60px;
 }
 
-.register_form input#register_firstname
-{
+.register_form input#register_firstname {
     width: 94px;
 }
 
-.register_form #register_button_container
-{
+.register_form #register_button_container {
     height: 35px;
 }
 
-.register_form #register_button_container button
-{
+.register_form #register_button_container button {
     float: right;
     font-weight: bold;
 }
 
 .login_form input::-webkit-input-placeholder,
-.register_form input::-webkit-input-placeholder
-{ /* WebKit browsers */
+.register_form input::-webkit-input-placeholder {
+    /* WebKit browsers */
     color: #f0795b;
     font-weight: bold;
 }
 
 .login_form input:-moz-placeholder,
-.register_form input:-moz-placeholder
-{ /* Mozilla Firefox 4 to 18 */
+.register_form input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
     color: #f0795b;
     font-weight: bold;
     opacity:  1;
 }
 
 .login_form input::-moz-placeholder,
-.register_form input::-moz-placeholder
-{ /* Mozilla Firefox 19+ */
+.register_form input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
     color: #f0795b;
     font-weight: bold;
     opacity:  1;
 }
 
 .login_form input:-ms-input-placeholder,
-.register_form input:-ms-input-placeholder
-{ /* Internet Explorer 10+ */
+.register_form input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
     color: #f0795b;
     font-weight: bold;
 }
 
-#login_id_pw div#link_list
-{
+#login_id_pw div#link_list {
     margin-left: 20px;
     float: left;
 }
