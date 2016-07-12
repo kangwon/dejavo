@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-#
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
@@ -139,14 +140,13 @@ def view_article(request, article_id):
 def edit_article(request, article_id):
     try:
         article = Article.objects.get(id = article_id)
-        if request.user not in article.owner.all():
+        if request.user not in article.owner.all(): # 유저가 해당 article이의 owner가 아닐 때
             msg = 'User does not own the article'
             if request.ACCEPT_FORMAT == 'html':
                 return HttpResponse(status = 403, content = msg)
             elif request.ACCEPT_FORMAT == 'json':
                 return JsonResponse(status = 403, data = { 'error' : msg })
-
-    except Article.DoesNotExist:
+    except Article.DoesNotExist:  # article_id에 해당하는 article이 없을 때
         msg = 'Article(' + str(article_id) + ') does not exist'
         if request.ACCEPT_FORMAT == 'html':
             return HttpResponse(status = 404, content = msg)
@@ -174,7 +174,6 @@ def edit_article(request, article_id):
         error_dict = {}
 
         if 'timeslot' in update_fields:
-
             post_timeslot_str = request.POST.get('timeslot')
             post_timeslot_list = json.loads(post_timeslot_str)
 
@@ -220,7 +219,6 @@ def edit_article(request, article_id):
                     new_ts.save()
                 for r_ts in remove_list:
                     r_ts.delete()
-                    
 
         else :
             timeslot_list = Timeslot.objects.filter(article = article).values('id')

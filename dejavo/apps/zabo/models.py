@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*- #
-
 from django.db import models
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -142,16 +141,17 @@ class Article(models.Model):
 
         poster = {'origin' : None, 'main_thumb' : None, 'category_thumb': None }
         if (bool(self.image)):
+            img_format = self.image.url.split('.')[-1].upper()
+            width = self.image.width
+            height = self.image.height
+            scale = 1
+
             poster['origin'] = self.image.url
-            poster['main_thumb'] = get_thumbnail(self.image, '600', quality=85).url
+            poster['main_thumb'] = get_thumbnail(self.image, '600', format=img_format, quality=85).url
 
             is_portrait = self.image.width < self.image.height
             to_scale = [222, 321] if is_portrait else [468, 321]
             geometry = None
-            scale = 1
-
-            height = self.image.height
-            width = self.image.width
 
             if width > to_scale[0] or height > to_scale[1]:
                 if height > to_scale[1]:

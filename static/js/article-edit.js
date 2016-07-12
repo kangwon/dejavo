@@ -841,7 +841,6 @@ $(document).ready(function(){
 						fields.push('제목');
 					} else if (key == 'timeslot') {
 						fields.push('일시');
-
 					} else if (key == 'timeslot_count') {
 						timeslot_count = true;
 					} else if (key == 'owner') {
