@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block css %}
+		<link rel="stylesheet" href="/static/css/zabo_calendar.css">
+{% endblock %}
+
+{% block title %}ZABO Calendar{% endblock %}
+
+{% block content %}
+    <div id="calendar_container">
+        <table id="calendar">
+            <thead>
+                <tr>
+                    <th colspan="7">
+                        <span id="year">{{ year }}년</span>
+                        <span id="month">{{ month }}월</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td>월</td>
+                    <td>화</td>
+                    <td>수</td>
+                    <td>목</td>
+                    <td>금</td>
+                    <td class="saturday">토</td>
+                    <td class="sunday">일</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for week in weeks %}
+                <tr>
+                {% for i, day in week %}
+                    {% if i == 5 %}
+                        <td class="saturday">{{ day }}</td>
+                    {% elif i == 6 %}
+                        <td class="sunday">{{ day }}</td>
+                    {% else %}
+                        <td>{{ day }}</td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block aftercontent %}
+    <script src="{{ STATIC_URL }}js/zabo_calendar.js"></script>
+{% endblock %}

@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^account/', include('dejavo.apps.account.urls')),
     url(r'^article/', include('dejavo.apps.zabo.urls')),
     url(r'^manage/', include('dejavo.apps.manage.urls')),
+    url(r'^calendar/', include('dejavo.apps.zabo_calendar.urls')),
 
     url(r'^favicon\.ico$', RedirectView.as_view(url='static/images/favicon.png')),
 

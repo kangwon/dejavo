@@ -1,0 +1,45 @@
+@import url('nanumbarungothic.css');
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+#calendar_container {
+    width: 960px;
+    margin: 30px auto;
+    font-family: 'Nanum Gothic';
+    background: #fff;
+}
+
+#calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+#calendar #year {
+    font-size: 24px;
+}
+#calendar #month {
+    font-size: 24px;
+}
+#calendar thead th {
+    height: 50px;
+    padding: 7px;
+    font-weight: normal;
+}
+#calendar thead td {
+    height: 30px;
+    padding: 7px;
+}
+#calendar tbody tr:hover {
+    background-color: #e1e1e1;
+}
+#calendar tbody td {
+    height: 100px;
+    padding: 7px;
+    vertical-align: top;
+    border: 1px solid #cccccc;
+}
+
+.saturday {
+    color: blue;
+}
+.sunday {
+    color: red;
+}
