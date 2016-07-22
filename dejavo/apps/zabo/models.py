@@ -106,6 +106,9 @@ class Article(models.Model):
             if len(unsatisfied_field) > 0:
                 raise ValidationError(unsatisfied_field)
 
+    def is_active(self):
+        return (self.is_published and (not self.is_blocked) and (not self.is_blocked))
+
     def as_json(self, ex = []):
 
         owner_list = []
