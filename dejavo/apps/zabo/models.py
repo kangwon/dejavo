@@ -107,7 +107,7 @@ class Article(models.Model):
                 raise ValidationError(unsatisfied_field)
 
     def is_active(self):
-        return (self.is_published and (not self.is_blocked) and (not self.is_blocked))
+        return (self.is_published and (not self.is_blocked) and (not self.is_deleted))
 
     def as_json(self, ex = []):
 
