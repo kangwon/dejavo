@@ -14,10 +14,12 @@
         <table id="calendar">
             <thead>
                 <tr>
-                    <th colspan="7">
-                        <span id="year">{{ year }}년</span>
-                        <span id="month">{{ month }}월</span>
+                    <th id="prev_month">&lt;</th>
+                    <th colspan="5">
+                        <span id="year"></span>
+                        <span id="month"></span>
                     </th>
+                    <th id="next_month">&gt;</th>
                 </tr>
                 <tr>
                     <td>월</td>
@@ -30,19 +32,6 @@
                 </tr>
             </thead>
             <tbody>
-            {% for week in weeks %}
-                <tr>
-                {% for i, day in week %}
-                    {% if i == 5 %}
-                        <td class="saturday">{{ day }}</td>
-                    {% elif i == 6 %}
-                        <td class="sunday">{{ day }}</td>
-                    {% else %}
-                        <td>{{ day }}</td>
-                    {% endif %}
-                {% endfor %}
-                </tr>
-            {% endfor %}
             </tbody>
         </table>
     </div>

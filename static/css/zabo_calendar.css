@@ -12,6 +12,9 @@
     width: 100%;
     border-collapse: collapse;
 }
+#calendar #prev_month, #next_month {
+    cursor: pointer;
+}
 #calendar #year {
     font-size: 24px;
 }
@@ -35,6 +38,16 @@
     padding: 7px;
     vertical-align: top;
     border: 1px solid #cccccc;
+}
+#calendar tbody .article {
+    width: 116px;
+    height: 14px;
+    font-size: 12px;
+    color: black;
+    background-color: #FDCCBF;
+    position: absolute;
+    border: solid 3px #fdcdbf;
+    border-radius: 4px;
 }
 
 .saturday {
